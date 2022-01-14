@@ -1,0 +1,25 @@
+{% extends "base_admin.html" %}
+{% block title %}
+  Job Details
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto mb-5">
+            <h2 class="pt-5">Job [ {{job_object}} ] Details</h2><hr>
+                <p><span class="font-weight-bold">Job ID : </span><span> JOB_{{job_object.id}}</span></p>
+                <p><span class="font-weight-bold">Job Title : </span><span> {{job_object}}</span></p>
+                <p><span class="font-weight-bold">Job Category : </span><span> {{job_object.category}}</span></p>
+                <p><span class="font-weight-bold">Job supervoised : </span><span> {{job_object.supervisor}}</span></p>
+                <p><span class="font-weight-bold">Job Salary : </span><span>$  {{job_object.salary}}</span></p>
+                <p><span class="font-weight-bold">Job Location : </span><span>{{job_object.location}}</span></p>
+                <p><span class="font-weight-bold">Job Type : </span><span>{{job_object.job_type}}</span></p>
+                <p><span class="font-weight-bold">Created On : </span><span>{{job_object.created_at}} ( {{job_object.created_at|timesince}} ago )</span></p>
+        </div>
+        </div>
+    </div>  
+  </div>
+{% endblock content %}

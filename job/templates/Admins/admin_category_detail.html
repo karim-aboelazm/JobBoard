@@ -1,0 +1,20 @@
+{% extends "base_admin.html" %}
+{% block title %}
+  Category Details
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto mb-5">
+            <h2 class="pt-5">Category of [ {{cat_object}} ] Details</h2><hr>
+            <p><span class="font-weight-bold">Category ID : </span><span> Category_{{cat_object.id}}</span></p>
+            <p><span class="font-weight-bold">Category Title : </span><span> {{cat_object}}</span></p>
+            <p><span class="font-weight-bold">Number Of Own Jobs : </span><span>{{cat_object.jobs_set.all.count}} Jobs</span></p>
+        </div>
+        </div>
+    </div>  
+  </div>
+{% endblock content %}

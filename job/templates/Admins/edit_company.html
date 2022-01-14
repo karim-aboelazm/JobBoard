@@ -1,0 +1,24 @@
+{% extends "base_admin.html" %}
+{% load bootstrap5 %}
+{% block title %}
+  Admin Company Edit
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Edit Company</h2>
+  <hr>
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <form action="" method="POST" class="mb-5">
+        {% csrf_token %}
+        {% bootstrap_form form%}
+        <button class="btn btn-success col-12" type="submit">Save</button>
+    </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content%}

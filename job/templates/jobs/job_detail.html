@@ -1,0 +1,120 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  Job Details
+{% endblock title %}
+{% load bootstrap5 %}
+{% block slider %}
+{% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+
+{% block content %}
+  
+<div class="job_details_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="job_details_header">
+                    <div class="single_jobs white-bg d-flex justify-content-between">
+                        <div class="jobs_left d-flex align-items-center">
+                            <div class="thumb">
+                                {% if job.logo %}
+                                    <img src="{{job.logo.url}}" style="width:100%" alt="">
+                                {% else %}
+                                    <img src="{% static 'img/logo.jpg' %}" style="width:100%" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="jobs_conetent">
+                                <a href="#"><h4>{{job}}</h4></a>
+                                <div class="links_locat d-flex align-items-center">
+                                    <div class="location">
+                                        <p> <i class="fa fa-map-marker"></i>{{job.location}}</p>
+                                    </div>
+                                    <div class="location">
+                                        <p> <i class="fa fa-clock-o"></i>{{job.job_type}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="descript_wrap white-bg">
+                    <div class="single_wrap">
+                        <h4>Job description</h4>
+                        <ul>
+                            <li style="text-align: justify;">{{job.description}}</li>  
+                        </ul>
+                    </div>
+                    <div class="single_wrap">
+                        <h4>Qualifications</h4>
+                        <ul>
+                            <li style="text-align: justify;">{{job.prequests}}</li>  
+                        </ul>
+                    </div>
+                    <div class="single_wrap">
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li style="text-align: justify;">{{job.benefits}}</li>  
+                        </ul>
+                    </div>
+                </div>
+                <div class="apply_job_form white-bg">
+                    <h4>Apply for the job</h4>
+                    {% if user.is_authenticated and request.user.candidates %}
+                   <form action="" method="post" enctype="multipart/form-data">
+                       {% csrf_token %}
+                        <div class="mb-3" style="display:none;">
+                            <label class="form-label" for="id_name">Job</label>
+                            <input type="text" name="job" value="{{job}}" maxlength="100" class="form-control" placeholder="Name" id="id_name" spellcheck="false" data-ms-editor="true">
+                        </div>
+                        <div class="mb-3" style="display:none;">
+                            <label class="form-label" for="id_name">Name</label>
+                            <input type="text" name="name" value="{{request.user.candidates.full_name}}" maxlength="100" class="form-control" placeholder="Name" id="id_name" spellcheck="false" data-ms-editor="true">
+                        </div>
+                        <div class="mb-3" style="display:none;">
+                            <label class="form-label" for="id_email">Email</label>
+                            <input type="email" name="email" value="{{request.user.email}}" maxlength="254" class="form-control" placeholder="Email" title="" required="" id="id_email">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="id_cv">Cv</label>
+                            <input type="file" name="cv" class="form-contro" title="" required="" id="id_cv">
+                        </div>
+                        <div class="mb-3" style="display:none;">
+                            <label class="form-label" for="id_about">About</label>
+                            <textarea name="about" cols="40" rows="10" maxlength="800" class="form-control" placeholder="About" title="" required="" id="id_about" spellcheck="false" data-ms-editor="true">{{request.user.candidates.about}}</textarea>
+                        </div>
+                        <button class="boxed-btn3 w-100" type="submit">Apply Now</button>
+                    </form>
+                    {% else %}
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form form%}
+                        <button class="boxed-btn3 w-100" type="submit">Apply Now</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="job_sumary">
+                    <div class="summery_header">
+                        <h3>Job Summery</h3>
+                    </div>
+                    <div class="job_content">
+                        <ul>
+                            <li>Published on: <span>{{job.created_at |timesince}}</span></li>
+                            <li>Vacancy: <span>{{job.vacancy}} Position</span></li>
+                            <li>Salary: <span>{{job.salary}} $ / month</span></li>
+                            <li>Location: <span>{{job.location}}</span></li>
+                            <li>Job Nature: <span>{{job.job_type}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+

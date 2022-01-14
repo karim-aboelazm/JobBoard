@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    {% include "snippts_auth/auth_head.html" %}
+    <title>
+        {% block title %}{% endblock title %}
+    </title>
+</head>
+<body>   
+<div class="scroll-down">SCROLL DOWN {% include "snippts_auth/auth_icon.html" %}</div>
+  <div class="container"></div>
+  <div class="modal">
+    {% block content %}{% endblock content %}
+    <button class="modal-button">
+        {% block definition %}{% endblock definition %}
+    </button>
+  </div>
+  <script src="{% static 'js/auth_js.js' %}"></script>
+</body>

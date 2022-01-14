@@ -1,0 +1,112 @@
+{% load static %}
+<header>
+    <div class="header-area ">
+        <div id="sticky-header" class="main-header-area">
+            <div class="container-fluid ">
+                <div class="header_bottom_border">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-2">
+                            <div class="logo">
+                                <a href="{% url 'jobs:home' %}">
+                                    <img src="{% static '' %}img/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="{% url 'jobs:home' %}">home</a></li>
+                                        <li><a href="{% url 'jobs:job_list' %}">Browse Job</a></li>
+                                        <li><a href="{% url 'jobs:all_company' %}"> Our Companies <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu" style="width: 500px;">
+                                                <div class="row p-3" style="height: 300px; overflow-y: scroll; overflow-x: none;">
+                                                    {% for com in all_company  %}
+                                                    <div class="col-md-6 text-center">
+                                                        <li><a href="{% url 'jobs:company_jobs' com.id %}">{{com}}</a></li>
+                                                    </div>
+                                                     {% endfor %}
+                                                </div>
+                                            </ul>
+                                        </li>
+                                        <li><a href="{% url 'jobs:contact'%}">Contact</a></li>
+                                        <li><a href="{% url 'jobs:all_category' %}"> All Categories <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu" style="width: 500px;">
+                                                <div class="row p-3" style="height: 300px; overflow-y: scroll; overflow-x: none;">
+                                                    {% for cat in all_category  %}
+                                                    <div class="col-md-6 text-center">
+                                                        <li><a href="{% url 'jobs:category_jobs' cat.id %}">{{cat}}</a></li>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 " style="max-width: 19%;">
+                            <div class="Appointment" style="float: right;">
+                                <div class="main-menu  d-none d-lg-block">
+                                    <nav>
+                                    {% if request.user.candidates or user.is_authenticated%}
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'jobs:candidate_profile'%}" style="font-size: 18px;"> 
+                                                {% if user.candidates.image %}
+                                                   <img src="{{request.user.candidates.image.url}}" style="height: 30px; width: 30px; margin-right:10px;" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                                                   {% else %}
+                                                   <img src="{% static 'default_user.jpg' %}"       style="height: 30px; width: 30px; margin-right:10px;" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                                                   {% endif %}
+                                                {{request.user.username}} <i class="ti-angle-down"></i></a>
+                                                <ul class="submenu">
+                                                    <li><a href="{% url 'jobs:candidate_profile'%}">Profile</a></li>
+                                            
+                                                    <li><a href="{% url 'jobs:candidate_edit_profile' request.user.id %}">Edit Profile</a></li>
+                                                    <hr>
+                                                    <li><a href="{% url 'jobs:candidate_logout'%}">logout</a></li>
+                                                </ul>
+                                            </li>  
+                                        </ul>
+                                   </nav>
+                                    {% else %}
+                                    <nav>
+                                        <ul id="navigation">
+                                            
+                                    <li><a  href="{% url 'jobs:candidate_register'%}">
+                                        <i class="fa fa-user"  aria-hidden="true"></i>
+                                        <span>
+                                            Register
+                                        </span>
+                                    </a></li>
+
+                                    <li><a  href="{% url 'jobs:candidate_login'%}">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <span>
+                                            Login
+                                        </span>
+                                    </a></li>
+                                   </nav>
+                                    {% endif %}
+                                </div>
+                                {% if user.is_authenticated and request.user.jobowner  %}
+                                <div class="d-none d-lg-block">
+                                    <a class="boxed-btn3" href="#">Post a Job</a>
+                                </div>
+                                {%else%}
+                                <div class="d-none d-lg-block">
+                                    
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+

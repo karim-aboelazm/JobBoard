@@ -1,0 +1,52 @@
+{% extends "base_admin.html" %}
+{% block title %}
+  Admin Job List
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+    <div class="containe">
+        <div class="col-md-12">
+            <h3 class="text-center mt-3 mb-3">All Jobs List</h3><hr>
+            <a class="btn btn-info mb-4" href="{% url 'job:admin_add_job' %}"><i class="fas fa-plus"></i> Add New Job</a>
+            <table class="table table-striped  mb-5">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Job Title</th>
+                        <th>Job Type</th>
+                        <th>Job Category</th>
+                        <th>Vacancy</th>
+                        <th>Price</th>
+                        <th>Location</th>
+                        <th>View Times</th>
+                        <th>Edit Job</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in all_jobs %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="{% url 'jobs:admin_job_detail' job.id %}">{{job.title}}</a></td>
+                            <td>{{job.job_type}}</td>
+                            <td>{{job.category}}</td>
+                            <td>{{job.vacancy}}</td>
+                            <td>$ {{job.salary}}</td>
+                            <td>{{job.location}}</td>
+                            <td>{{job.view_count}}</td>
+                            {% if job.id %}
+                            <td><a href="{% url 'jobs:admin_edit_job' job.id %}"><i class="fas fa-edit"></i></a></td>
+                            {% else %}
+                            <td><a href=""><i class="fas fa-edit"></i></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}
+

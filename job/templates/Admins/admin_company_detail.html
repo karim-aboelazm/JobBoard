@@ -1,0 +1,21 @@
+{% extends "base_admin.html" %}
+{% block title %}
+  Company Details
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto mb-5">
+            <h2 class="pt-5">Company of [ {{com_object}} ] Details</h2><hr>
+            <p><span class="font-weight-bold">Company ID : </span><span> Company_{{com_object.id}}</span></p>
+            <p><span class="font-weight-bold">Company Title : </span><span> {{com_object}}</span></p>
+            <p><span class="font-weight-bold">Company Location : </span><span>{{com_object.location}}</span></p>
+            <p><span class="font-weight-bold">Number Of Own Jobs : </span><span>{{com_object.jobs_set.all.count}}</span></p>
+        </div>
+        </div>
+    </div>  
+  </div>
+{% endblock content %}

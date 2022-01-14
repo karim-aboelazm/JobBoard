@@ -1,0 +1,48 @@
+{% extends "base_admin.html" %}
+{% block title %}
+  Admin Job List
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+    <div class="containe">
+        <div class="col-md-12">
+            <h3 class="text-center mt-3 mb-3">All Company List</h3><hr>
+            
+            <a class="btn btn-info mb-4" href="{% url 'job:admin_add_company' %}">
+                <i class="fas fa-plus"></i> 
+                Add New Company
+            </a>
+            <table class="table table-striped  mb-5">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Company</th>
+                        <th>Number Of Job</th>
+                        <th>Location</th>
+                        <th>Edit Company</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for com in all_companies %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="{% url 'jobs:admin_company_detail' com.id %}">{{com}}</a></td>
+                            <td>{{com.jobs_set.all.count}}</td>
+                            <td>{{com.location}}</td>
+                            {% if com.id %}
+                            <td><a href="{% url 'jobs:admin_edit_company' com.id %}"><i class="fas fa-edit"></i></a></td>
+                            {% else %}
+                            <td><a href=""><i class="fas fa-edit"></i></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}
+

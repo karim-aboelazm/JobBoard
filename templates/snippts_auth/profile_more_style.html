@@ -1,0 +1,91 @@
+<style>
+    #myskills{
+        
+        font: 14px Arial;
+        color: rgb(32, 31, 31);
+    }
+    #skills {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 960px;
+      }
+      #skills li {
+        position: relative;
+        margin-bottom: 32px;
+        padding-left: 6px;
+        font-size:17px;
+      }
+      #skills li .bar-container,
+      #skills li .bar {
+        position: absolute;
+        left: 0;
+        height: 5px;
+        border-radius: 5px;
+        content: "";
+      }
+      #skills li .bar-container {
+        bottom: -8px;
+        width: 100%;
+        background-color: #333;
+        text-align: right;
+      }
+      #skills li .bar-container .bar {
+        top: 0;
+      }
+      #skills li .bar-container .pct {
+        position: absolute;
+        top: -19px;
+        right: 0;
+        opacity: 0;
+        transition: opacity 0.3s linear;
+      }
+</style>
+<script>
+    function openDetails(tab_name) {
+        var i;
+        var x = document.getElementsByClassName("new_tab");
+        for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+        }
+        document.getElementById(tab_name).style.display = "block";
+      }
+</script>
+<script>
+    (function ($) {
+        "use strict";
+    
+        var $bars = $(".bar"),
+            methods = {
+                init: function () {
+                    // Bind events
+                    methods.bindEvents();
+                },
+                bindEvents: function () {
+                    // Loop through each of the bars...
+                    $bars.each(function () {
+                        var $bar = $(this),
+                            $pct = $bar.find(".pct"),
+                            data = $bar.data("bar");
+    
+                        setTimeout(function () {
+                            $bar.css("background-color", data.color).animate(
+                                {
+                                    width: $pct.html()
+                                },
+                                data.speed || 3000,
+                                function () {
+                                    $pct.css({
+                                        color: data.color,
+                                        opacity: 1
+                                    });
+                                }
+                            );
+                        }, data.delay || 0);
+                    });
+                }
+            };
+    
+        // Initialize on page load
+        methods.init();
+    })(jQuery);
+</script>

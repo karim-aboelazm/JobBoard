@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+ {{Company_Jobs}} All Jobs
+{% endblock title %}
+{% block slider %}
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3>{{Company_Jobs.jobs_set.all.count}} + Jobs Available</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock slider %}
+{% block content %}
+<div class="job_listing_area">
+    <div class="container pt-5">
+        <div class="row align-items-center">
+            <div class="col-md-12 text-center">
+                <div class="separator">
+                    <div class="line"></div>
+                    <h2>{{Company_Jobs}}</h2>
+                    <div class="line"></div>
+                </div>        
+            </div>
+        </div>
+        <div class="job_lists">
+            <div class="row ">
+                {% for job in Company_Jobs.jobs_set.all %}
+                    <div class="col-lg-12 col-md-12">
+                        <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="jobs_left d-flex align-items-center">
+                                <div class="thumb">
+                                    {% if job.logo %}
+                                    <img src="{{job.logo.url}}" style="padding: 10px; width: 100%; border-radius: 25px;" alt="">
+                                    {%else%}
+                                    <img src="{% static 'img/logo.jpg' %}" style="padding: 10px;width: 100%;  border-radius: 25px;" alt="">
+                                    {% endif %}
+                                   </div>
+                                <div class="jobs_conetent">
+                                    <a href="{% url 'job:job_details' job.id %}"><h4>{{job}}</h4></a>
+                                    <div class="links_locat d-flex align-items-center">
+                                        <div class="location">
+                                            <p> <i class="fa fa-map-marker"></i>{{job.location}}</p>
+                                        </div>
+                                        <div class="location">
+                                            <p> <i class="fa fa-clock-o"></i>{{job.job_type}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jobs_right">
+                                <div class="apply_now">
+                                    <a href="job_details.html" class="boxed-btn3">Apply Now</a>
+                                </div>
+                                <div class="date">
+                                    <p>Date line:{{job.created_at | timesince}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

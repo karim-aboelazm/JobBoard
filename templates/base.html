@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <title>
+        {% block title %}
+        
+        {% endblock title %}
+    </title>
+    {% include "snippts/head.html" %}
+</head>
+<body>
+    {% include "snippts/header.html" %}
+    
+    {% block slider %}
+      
+    {% endblock slider %}
+    
+    {% block content %}{% endblock content %}
+    
+    {% include "snippts/footer.html" %}
+    {% include "snippts/scripts.html" %}
+</body>
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
+
+</html>

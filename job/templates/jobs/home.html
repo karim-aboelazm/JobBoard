@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+    {% block title %}
+    Job Board
+    {% endblock title %}
+    {% block slider %}
+    {% include "snippts/slider.html" %}
+    {% endblock slider %}
+    {% block content %}
+
+        <div class="popular_catagory_area" id="get_started">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="section_title mb-40">
+                            <h3>Popolar Categories</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="brouse_job text-right">
+                            <a href="{% url 'jobs:all_category' %}" class="boxed-btn4">Browse More Categories</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for cat in all_category|slice:"0:8"  %}
+                    <div class="col-lg-4 col-xl-3 col-md-6">
+                        <div class="single_catagory">
+                            <a href="{% url 'jobs:category_jobs' cat.id %}"><h4>{{cat}}</h4></a>
+                            <p> <span>{{cat.jobs_set.all.count }}</span> Available Jobs</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="job_listing_area">
+            <div class="container pt-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="section_title">
+                            <h3>Job Listing</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="brouse_job text-right">
+                            <a href="{% url 'jobs:job_list' %}" class="boxed-btn4">Browse More Job</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job_lists">
+                    <div class="row ">
+                        {% for job in all_jobs|slice:"0:6"  %}
+                            <div class="col-lg-12 col-md-12">
+                                <div class="single_jobs white-bg d-flex justify-content-between">
+                                    <div class="jobs_left d-flex align-items-center">
+                                        {% if job.logo %}
+                                        <img src="{{job.logo.url}}" style="padding: 10px; border-radius: 25px;" alt="">
+                                        {%else%}
+                                        <img src="{% static 'img/logo.jpg' %}" style="padding: 10px; border-radius: 25px;" alt="">
+                                        {% endif %}
+                                        <div class="jobs_conetent">
+                                            <a href="{% url 'job:job_details' job.id %}"><h4>{{job}}</h4></a>
+                                            <div class="links_locat d-flex align-items-center">
+                                                <div class="location">
+                                                    <p> <i class="fa fa-map-marker"></i>{{job.location}}</p>
+                                                </div>
+                                                <div class="location">
+                                                    <p> <i class="fa fa-clock-o"></i>{{job.job_type}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="jobs_right">
+                                        <div class="apply_now">
+                                            <a href="job_details.html" class="boxed-btn3">Apply Now</a>
+                                        </div>
+                                        <div class="date">
+                                            <p>Date line:{{job.created_at | timesince}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="top_companies_area">
+            <div class="container">
+                <div class="row align-items-center mb-40">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="section_title">
+                            <h3>Top Companies</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="brouse_job text-right">
+                            <a href="{% url 'jobs:all_company' %}" class="boxed-btn4">Browse More Companies</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for com in all_company  %}
+                        
+                    <div class="col-lg-4 col-xl-3 col-md-6">
+                        <div class="single_company">
+                            <div class="thumb">
+                                <img src="{{com.image.url}}" style="width: 100%; padding:-10px" alt="">
+                            </div>
+                            <a href="{% url 'jobs:company_jobs' com.id %}"><h3>{{com}}</h3></a>
+                            <p> <span>{{com.jobs_set.all.count}}</span> Available Jobs</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="job_searcing_wrap overlay">
+            <div class="container">
+                <div class="row">
+                    {% if request.user.jobowner %}
+                    <div class="col-lg-5 offset-lg-1 col-md-6">
+                        <div class="searching_text">
+                            <h3>Looking for a Job?</h3>
+                            <p>We provide online instant cash loans with quick approval </p>
+                            <a href="{% url 'jobs:job_list' %}" class="boxed-btn3">Browse Job</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 offset-lg-1 col-md-6">
+                        <div class="searching_text">
+                            <h3>Looking for a Expert?</h3>
+                            <p>We provide online instant cash loans with quick approval </p>
+                            <a href="#" class="boxed-btn3">Post a Job</a>  
+                        </div>
+                    </div>
+                    {%else%}
+                    <div class="col-md-12">
+                        <div class="searching_text text-center">
+                            <h3>Looking for a Job?</h3>
+                            <p>We provide online instant cash loans with quick approval </p>
+                            <a href="{% url 'jobs:job_list' %}" class="boxed-btn3">Browse Job</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+    {% endblock content %}
+    

@@ -1,0 +1,202 @@
+{% extends "base_profile.html" %}
+{% load static %}
+{% load bootstrap5 %}
+{% if user.is_authenticated  %}
+{% block title %}
+Profile
+{% endblock title %}
+    {% block content %}
+    <div class="container emp-profile">
+        <form method="post" class="m-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        {% if profile.image %}
+                            <img src="{{profile.image.url}}" style="width:100%;height:300px;" alt="Circle Image" class="img-raised img-fluid">
+                        {% else %}
+                            <img src="{% static 'default_user.jpg' %}" style="width:100%;height:300px;" alt="Circle Image" class="img-raised  img-fluid">
+                        {% endif %}
+                    </div>
+                    <div class="profile-work">
+                        <p>Personnal Bio</p>
+                        <span style="font-size: 18px;font-family: 'Poppins', sans-serif;">" {{profile.bio}} "</span><hr>
+                        <p>Add Your Skills</p>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="input-group row">
+                                <input type="text" class="form-control col-md-5" name="skill" placeholder="skill" aria-label="skill" aria-describedby="button-addon2">
+                                <input type="number" class="form-control col-md-5" name="percent" placeholder="percent" aria-label="percent" aria-describedby="button-addon2">
+                                <button class="btn btn-success col-md-2" type="submit" id="button-addon2"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="back_to_home mt-5">
+                        <a href="{%url 'jobs:home' %}"><i style="font-size: 50px;" class="fas fa-arrow-circle-left"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {% if request.user.candidates  %}
+                    <div class="profile-head">
+                        <h5 style="font-size: 35px;font-weight:600;font-family: 'Poppins', sans-serif;">
+                            {{request.user.candidates.full_name}}
+                        </h5>
+                        {% if profile.profession %}
+                        <h6 style="font-size: 16px;font-weight:600;font-family: 'Poppins', sans-serif;" >
+                            {{profile.profession}}
+                        </h6>
+                        {% else %}
+                        <h6 style="font-size: 16px;font-weight:600;font-family: 'Poppins', sans-serif;">
+                            Candidate
+                        </h6>
+                        {%endif%}
+                    </div>
+                    <hr>
+                    <h3 class="mt-3 mb-3">About Me</h3>
+                    {% if profile.about %}
+                        <p style="text-align: justify;">"{{profile.about}}"</p>
+                    {%else%}
+                        <p style="text-align: justify;">" Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+                            Numquam magnam quod architecto ipsum sint possimus commodi 
+                            eum necessitatibus cupiditate, quae ea quo tenetur voluptatem 
+                            maiores obcaecati officia iure. Impedit, nam "</p>
+                    {% endif %}
+                    <div class="candidate_info" >
+                        <ul class="nav nav-tabs mt-5 mb-5">
+                            <li class="active"><a data-toggle="tab"style="font-size: 16px;font-weight:600;font-family: 'Poppins', sans-serif;" href="#home">Info</a></li>
+                            <li><a data-toggle="tab" style="font-size: 16px;font-weight:600;font-family: 'Poppins', sans-serif;" href="#time_line">Time Line</a></li>
+                            <li><a data-toggle="tab" style="font-size: 16px;font-weight:600;font-family: 'Poppins', sans-serif;" href="#myskills">Skills</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane fade in active">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label>Username</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{request.user.username}}</p>
+                                    </div>
+                                </div>
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{request.user.candidates.full_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{request.user.email}}</p>
+                                    </div>
+                                </div>
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{profile.phone}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Profession</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if profile.profession %}
+                                        <p>{{profile.profession}}</p>
+                                        {% else %}
+                                        <p>Candidate</p>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="time_line" class="tab-pane fade">
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>Experience</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if profile.experience %}
+                                        <p>{{profile.experience}}</p>
+                                        {% else %}
+                                        <p>Beginner</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>Hourly Rate</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if profile.hour_rate %}
+                                        <p>{{profile.hour_rate}} $ / hr</p>
+                                        {% else %}
+                                        <p>50 $ / hr</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>Total Projects</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if profile.projects_num %}
+                                        <p>{{profile.projects_num}}  projects</p>
+                                        {% else %}
+                                        <p>no projects</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row  mb-3">
+                                    <div class="col-md-6">
+                                        <label>English Level</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if profile.english_level %}
+                                        <p>{{profile.english_level}}</p>
+                                        {% else %}
+                                        <p>beginner</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="myskills" class="tab-pane fade">
+                                <ul id="skills">
+                                    {% for sk in profile.skills_set.all%}
+                                   
+                                    <li class="mb-5" style="padding-right: 50px;list-style: none;">
+                                        {{sk.skill}}
+                                        <div class="row bar-container" style="margin-right: 100px;" >
+                                            <span class="bar" data-bar='{ "color": "#19f" }'>
+                                                <span class="pct"  >{{sk.percent}}%</span>
+                                            </span>
+                                            <a href="{% url 'jobs:manage_skill' sk.id%}?action=rcr" style="margin-left: -50px; margin-top: -15px;" type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                        </div>  
+                                    </li>
+                                    
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+                </div>  
+                <div class="col-md-2">
+                    <a href="{% url 'jobs:candidate_edit_profile' profile.id %}" class="profile-edit-btn">
+                        <i class="fas fa-edit"></i>  Edit Profile
+                    </a>
+                </div>
+            </div> 
+        </form> 
+    </div> 
+    {% include "snippts_auth/profile_more_style.html" %}
+    {% endblock content %}
+{% else %}
+    <p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+
+

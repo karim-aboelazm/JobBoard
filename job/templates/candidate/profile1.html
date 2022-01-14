@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% if user.is_authenticated %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+
+  <div class="container">
+    <div class="row profile text-center mt-3">
+      <div class="avatar">
+      {% if profile.image %}
+        <img src="{{profile.image.url}}" style="height: 200px; width: 200px;" alt="Circle Image" class="img-raised rounded-circle img-fluid mb-5">
+      {% else %}
+      <img src="{% static 'default_user.jpg' %}" style="height: 200px; width: 200px;" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+      {% endif %}
+      </div>
+      {% if request.user.candidates %}
+      <div class="name">
+          <h3 class="title">{{request.user.candidates.full_name}}</h3>
+          <h6>Candidate</h6>
+          </div>
+      {%elif user.is_authenticated %}
+      <div class="name">
+          <h3 class="title">{{profile.user.first_name}} {{profile.user.last_name}}</h3>
+          <h6>{{profile.job}}</h6>
+          </div>
+      {% endif %}
+    </div>
+
+    <div class="row accordion mt-5 mb-5" id="accordionExample">
+      <a class="btn btn-dark btn-lg btn-block col-1 mb-2" href="{% url 'jobs:candidate_edit_profile' profile.id %}">
+        <i class="fas fa-user-edit"></i></a>
+      <div class="accordion-item">
+        
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h4>Personal Info</h4>
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p><span class="font-weight-bold">Username : </span><span> {{request.user.username}}</span></p>
+            <p><span class="font-weight-bold">Email : </span><span> {{request.user.email}}</span></p>
+            <p><span class="font-weight-bold">Phone : </span><span>{{profile.phone}}</span></p>
+            <p><span class="font-weight-bold">Address : </span><span>{{profile.address}}</span></p>
+            {% if request.user.candidates %}
+            <p><span class="font-weight-bold">Joined On : </span><span>{{request.user.candidates.join_on}}</span></p>
+            {% elif user.is_authenticated %}
+            <p><span class="font-weight-bold">Joined On : </span><span>{% now "jS F Y H:i" %}</span></p>
+            {%endif%}
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <h4>Jos Info</h4>
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+           
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+  
+  
+{% endblock content %}
+{% else %}
+    <p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+
+

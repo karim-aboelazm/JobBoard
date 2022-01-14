@@ -1,0 +1,46 @@
+{% extends "base_admin.html" %}
+{% block title %}
+  Admin Job List
+{% endblock title %}
+{% block slider %}
+  {% include "snippts/slider_detail.html" %}
+{% endblock slider %}
+{% block content %}
+    <div class="containe">
+        <div class="col-md-12">
+            <h3 class="text-center mt-3 mb-3">All Category List</h3><hr>
+            
+            <a class="btn btn-info mb-4" href="{% url 'job:admin_add_category' %}">
+                <i class="fas fa-plus"></i> 
+                Add New Category
+            </a>
+            <table class="table table-striped  mb-5">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Category</th>
+                        <th>Number Of Job</th>
+                        <th>Edit Company</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in all_category %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="{% url 'jobs:admin_category_detail' cat.id%}">{{cat}}</a></a></td>
+                            <td>{{cat.jobs_set.all.count}}</td>
+                            {% if cat.id %}
+                            <td><a href="{% url 'jobs:admin_edit_category' cat.id %}"><i class="fas fa-edit"></i></a></td>
+                            {% else %}
+                            <td><a href=""><i class="fas fa-edit"></i></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}
+

@@ -1,0 +1,61 @@
+{% load static %}
+<header>
+    <div class="header-area ">
+        <div id="sticky-header" class="main-header-area">
+            <div class="container-fluid ">
+                <div class="header_bottom_border">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-2">
+                            <div class="logo">
+                                <a href="{% url 'jobs:home' %}">
+                                    <img src="{% static '' %}img/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="{% url 'jobs:admin_all_jobs'%}">All Jobs</a>
+                                        <li><a href="{% url 'jobs:admin_all_company'%}">All Companies</a>
+                                        <li><a href="{% url 'jobs:admin_all_category'%}">All Categories</a></li>
+                                        <li><a href="{% url 'jobs:home'%}">Visit Site</a></li>
+                                        
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 " style="max-width: 19%;">
+                            <div class="Appointment" style="float: right;">
+                                <div class="main-menu  d-none d-lg-block">
+                                    <nav>
+                                    {% if request.user.admin and user.is_authenticated%}
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'jobs:candidate_profile'%}" style="font-size: 18px;"> 
+                                                {% if user.admin.image %}
+                                                   <img src="{{request.user.admin.image.url}}" style="height: 30px; width: 30px; margin-right:10px;" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                                                   {% else %}
+                                                   <img src="{% static 'default_user.jpg' %}"       style="height: 30px; width: 30px; margin-right:10px;" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                                                   {% endif %}
+                                                {{request.user.username}}
+                                            </li>  
+                                            <li>
+                                                <a href="{% url 'jobs:admin_logout' %}" style="font-size: 18px;"> <i style="font-size: 18px;" class="fas fa-power-off"></i> logout </a>
+                                            </li>
+                                        </ul>
+
+                                   </nav>
+                                    {% endif %}
+                                </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+
